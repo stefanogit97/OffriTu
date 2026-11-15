@@ -1235,9 +1235,17 @@ tbody tr:last-child td {
   }
 
 .page {
-  width: calc(100% - 32px);
-  margin: 0 auto;
-  padding-top: 30px;
+  width: 100%;
+  padding: 30px 8px 0;
+}
+  
+ .panel {
+  overflow: hidden;
+}
+
+.field input,
+.field select {
+  max-width: 100%;
 }
 
   .intro {

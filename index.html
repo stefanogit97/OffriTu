@@ -144,11 +144,30 @@
               </div>
               <div class="field">
                 <label for="entry-drinker">Chi ha bevuto?</label>
-                <select id="entry-drinker" name="drinker" required> <option value="" selected disabled>Seleziona una persona</option> <option value="Io">Io</option> </select>
+                 
+                <input
+  id="entry-drinker"
+  name="drinker"
+  type="text"
+  maxlength="60"
+  placeholder="Seleziona o scrivi una persona"
+  list="people-options"
+  autocomplete="off"
+  required>
+
               </div>
               <div class="field">
                 <label for="entry-payer">Chi ha pagato?</label>
-                 <select id="entry-payer" name="payer" required> <option value="" selected disabled>Seleziona una persona</option> <option value="Io">Io</option> </select>
+                 <input
+  id="entry-payer"
+  name="payer"
+  type="text"
+  maxlength="60"
+  placeholder="Seleziona o scrivi una persona"
+  list="people-options"
+  autocomplete="off"
+  required>
+
                 <span class="field-hint">Scegli “Io” per registrare ciò che hai bevuto o pagato tu.</span>
               </div>
               <datalist id="people-options"><option value="Io"></option></datalist>

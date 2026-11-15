@@ -1218,10 +1218,11 @@ tbody tr:last-child td {
     height: 68px;
   }
 
-  .page {
-    width: calc(100% - 30px);
-    padding-top: 30px;
-  }
+ .page {
+  width: 100%;
+  padding: 30px 12px 0;
+  box-sizing: border-box;
+}
 
   .intro {
     align-items: flex-start;

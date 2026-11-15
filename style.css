@@ -1279,12 +1279,11 @@ tbody tr:last-child td {
   }
 
   .entry-panel,
-  .people-panel,
-  .balance-report-panel,
-  .history-panel {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
+.people-panel,
+.balance-report-panel,
+.history-panel {
+  padding: 12px;
+}
 
   .history-heading {
     align-items: flex-start;

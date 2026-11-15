@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>OffriTu? — il conto della macchinetta</title>
+
+  <meta name="theme-color" content="#70472f">
+  <meta name="description" content="Gestisci caffè, cappuccini e piccoli debiti tra colleghi.">
+
+  <!-- Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OffriTu">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Icone -->
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="OffriTu?, pagina iniziale">
+        <span class="brand-mark">
+          <svg class="brand-mascot" viewBox="0 0 72 68" role="img" aria-labelledby="mascot-title">
+            <title id="mascot-title">Tazzina sorridente con occhi a forma di dollaro</title>
+            <path d="M51 25h6a9 9 0 0 1 0 18h-8" fill="none" stroke="#67432f" stroke-width="4" stroke-linecap="round"/>
+            <path d="M13 21h39l-4 31a23 23 0 0 1-31 0z" fill="#ead3bd" stroke="#67432f" stroke-width="3" stroke-linejoin="round"/>
+            <ellipse cx="32.5" cy="21" rx="19.5" ry="7" fill="#67432f"/>
+            <ellipse cx="32.5" cy="21" rx="15" ry="4" fill="#9a6544"/>
+            <text x="22" y="41" class="mascot-dollar">$</text>
+            <text x="37" y="41" class="mascot-dollar">$</text>
+            <path d="M26 45q7 8 14 0" fill="none" stroke="#67432f" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M13 57q19 7 39 0" fill="none" stroke="#67432f" stroke-width="4" stroke-linecap="round"/>
+            <path d="M24 13q-4-4 0-8m12 8q-4-4 0-8" fill="none" stroke="#b48b6c" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <span class="brand-name">Offri<span class="brand-light">Tu?</span></span>
+          <span class="brand-tagline">Piccoli conti, grandi amicizie.</span>
+          <span id="theme-hint" class="theme-hint">Passa al Dark Mode per non dare nell’occhio agli scrocconi ☕</span>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Attiva modalità scura" title="Attiva modalità scura">
+          <span id="theme-toggle-icon" aria-hidden="true">☾</span>
+          <span id="theme-toggle-label">Scuro</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="intro">
+        <div>
+          <h1>Il registro della macchinetta</h1>
+          <p class="intro-copy">Scopri con quali colleghi sei in credito o in debito, tra bevande e spese</p>
+        </div>
+        <div class="period-control">
+          <label for="period-select">Periodo</label>
+          <select id="period-select">
+            <option value="all">Da sempre</option>
+            <option value="month">Questo mese</option>
+          </select>
+          <input id="month-select" type="month" aria-label="Seleziona il mese" hidden>
+        </div>
+      </section>
+
+      <div id="app-message" class="message" role="status" aria-live="polite" hidden></div>
+
+      <nav class="tabs" role="tablist" aria-label="Sezioni dell'app">
+        <button id="tab-registro" class="tab-button is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-registro">Registro</button>
+        <button id="tab-grafici" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="panel-grafici" tabindex="-1">Grafici</button>
+      </nav>
+
+      <section id="panel-registro" class="tab-panel" role="tabpanel" aria-labelledby="tab-registro">
+        <section class="summary-grid" aria-label="Riepilogo del periodo">
+          <article class="summary-card summary-coffee">
+            <span class="summary-label">Bevande consumate da me</span>
+            <strong id="total-beverages">0</strong>
+            <span id="period-caption" class="summary-foot">Da sempre</span>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">Pagato da me</span>
+            <strong id="total-paid-by-me">€ 0,00</strong>
+            <span class="summary-foot">Per le bevande registrate</span>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">Mi devono</span>
+            <strong id="total-owed-to-me">€ 0,00</strong>
+            <span class="summary-foot">Credito verso le altre persone</span>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">Devo</span>
+            <strong id="total-i-owe">€ 0,00</strong>
+            <span class="summary-foot">Debito verso le altre persone</span>
+          </article>
+          <article id="net-balance-card" class="summary-card summary-net-card summary-net-neutral">
+            <span class="summary-label">Saldo netto</span>
+            <strong id="total-net-balance">€ 0,00</strong>
+            <span id="net-balance-status" class="summary-foot">In pari · Da sempre</span>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <section class="panel entry-panel" aria-labelledby="entry-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">NUOVA BEVANDA</p>
+                <h2 id="entry-heading">Aggiungi una bevanda</h2>
+              </div>
+              <span class="heading-icon" aria-hidden="true">＋</span>
+            </div>
+            <form id="entry-form">
+              <div class="form-row">
+                <div class="field">
+                  <label for="entry-date">Data</label>
+                  <input id="entry-date" name="date" type="date" required>
+                </div>
+                <div class="field">
+                  <label for="entry-product">Bevanda</label>
+                  <select id="entry-product" name="product" required>
+                    <option value="Caffè">Caffè</option>
+                    <option value="Cappuccino">Cappuccino</option>
+                    <option value="Tè">Tè</option>
+                    <option value="Cioccolata">Cioccolata</option>
+                    <option value="Caffè premium">Caffè premium</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="entry-quantity">Quantità</label>
+                  <input id="entry-quantity" name="quantity" type="number" min="1" step="1" placeholder="1" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="entry-drinker">Chi ha bevuto?</label>
+                <input id="entry-drinker" name="drinker" type="text" maxlength="60" placeholder="Io" list="people-options" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="entry-payer">Chi ha pagato?</label>
+                <input id="entry-payer" name="payer" type="text" maxlength="60" placeholder="Io" list="people-options" autocomplete="off" required>
+                <span class="field-hint">Scegli “Io” per registrare ciò che hai bevuto o pagato tu.</span>
+              </div>
+              <datalist id="people-options"><option value="Io"></option></datalist>
+              <div class="field">
+                <label for="entry-price">Costo per bevanda</label>
+                <div class="input-with-suffix">
+                  <input id="entry-price" name="price" type="number" min="0.01" max="100" step="0.01" placeholder="1,00" required>
+                  <span>€</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="entry-note">Nota <span class="optional">(facoltativa)</span></label>
+                <input id="entry-note" name="note" type="text" maxlength="160" placeholder="Es. espresso, giro del lunedì">
+              </div>
+              <button class="button button-primary submit-button" type="submit">Registra la bevanda <span aria-hidden="true">↗</span></button>
+            </form>
+          </section>
+
+          <section class="panel people-panel" aria-labelledby="people-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">I MIEI CONTI</p>
+                <h2 id="people-heading">I miei saldi con gli altri</h2>
+              </div>
+              <span class="heading-icon heading-icon-green" aria-hidden="true">↗</span>
+            </div>
+            <p class="section-description">Saldo positivo: mi devono. Saldo negativo: devo a quella persona.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Persona</th>
+                    <th scope="col">Saldo bevande</th>
+                    <th scope="col">Indice / categoria</th>
+                    <th scope="col" class="align-right">Saldo €</th>
+                  </tr>
+                </thead>
+                <tbody id="people-list"></tbody>
+              </table>
+              <div id="people-empty" class="empty-state" hidden>
+                <span aria-hidden="true">☕</span>
+                <p>Ancora nessuna bevanda.<br>Il primo giro lo segni tu.</p>
+              </div>
+            </div>
+            <p class="table-footnote">Indice = bevande offerte a me ÷ bevande che io ho offerto a quella persona.</p>
+          </section>
+        </section>
+
+        <section class="panel history-panel" aria-labelledby="history-heading">
+          <div class="history-heading">
+            <div>
+              <p class="eyebrow">ULTIMI AGGIORNAMENTI</p>
+              <h2 id="history-heading">Movimenti</h2>
+            </div>
+            <div class="history-actions">
+              <button id="movement-csv-button" class="button button-secondary" type="button">Esporta CSV</button>
+              <button class="button button-secondary export-backup-button" type="button">Esporta backup</button>
+              <label class="button button-secondary import-label" for="movement-import-file">Importa backup</label>
+              <button class="button button-secondary pdf-button" type="button">Esporta PDF</button>
+              <input id="movement-import-file" class="import-file" type="file" accept="application/json,.json" hidden>
+            </div>
+          </div>
+          <div class="table-wrap history-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Data</th>
+                  <th scope="col">Bevanda</th>
+                  <th scope="col">Chi ha bevuto</th>
+                  <th scope="col">Chi ha pagato</th>
+                  <th scope="col">Q.tà</th>
+                  <th scope="col">Costo</th>
+                  <th scope="col">Nota</th>
+                  <th scope="col"><span class="visually-hidden">Azioni</span></th>
+                </tr>
+              </thead>
+              <tbody id="history-list"></tbody>
+            </table>
+            <div id="history-empty" class="empty-state" hidden>
+              <p>Nessun movimento in questo periodo.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel balance-report-panel" aria-labelledby="balance-report-heading">
+          <div class="history-heading report-heading">
+            <div>
+              <p class="eyebrow">RIEPILOGO PERSONALE</p>
+              <h2 id="balance-report-heading">Crediti e debiti mese per mese</h2>
+            </div>
+            <div class="history-actions report-actions">
+              <button id="summary-export-button" class="button button-secondary" type="button">Esporta riepilogo CSV</button>
+              <button class="button button-secondary pdf-button" type="button">Esporta PDF</button>
+              <button class="button button-secondary export-backup-button" type="button">Esporta backup</button>
+              <label class="button button-secondary import-label" for="summary-import-file">Importa backup</label>
+              <input id="summary-import-file" class="import-file" type="file" accept="application/json,.json" hidden>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="balance-report-table">
+              <thead>
+                <tr>
+                  <th scope="col">Periodo</th>
+                  <th scope="col">Persona</th>
+                  <th scope="col" class="align-right">Bevande a credito</th>
+                  <th scope="col" class="align-right">Bevande a debito</th>
+                  <th scope="col" class="align-right">Credito €</th>
+                  <th scope="col" class="align-right">Debito €</th>
+                </tr>
+              </thead>
+              <tbody id="balance-report-list"></tbody>
+            </table>
+            <div id="balance-report-empty" class="empty-state" hidden>
+              <p>Il riepilogo apparirà dopo aver registrato movimenti con “Io”.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="panel-grafici" class="tab-panel charts-panel" role="tabpanel" aria-labelledby="tab-grafici" hidden>
+        <div class="panel chart-controls">
+          <div>
+            <p class="eyebrow">I MIEI SALDI</p>
+            <h2>Confronto mese per mese</h2>
+            <p class="section-description">Verde = mi devono; rosso = devo a quella persona.</p>
+          </div>
+          <div class="chart-filters">
+            <div class="field">
+              <label for="chart-range">Periodo</label>
+              <select id="chart-range">
+                <option value="all" selected>Tutto lo storico</option>
+                <option value="12">Ultimi 12 mesi registrati</option>
+                <option value="6">Ultimi 6 mesi registrati</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="chart-person">Persona</label>
+              <select id="chart-person">
+                <option value="all">Tutte le persone</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <article class="panel chart-card">
+            <div class="chart-heading">
+              <p class="eyebrow">SALDO IN BEVANDE</p>
+              <h2>Bevande a credito o a debito</h2>
+              <p>Bevande pagate da me per quella persona, meno quelle pagate da lei per me.</p>
+            </div>
+            <div class="chart-scroll">
+              <svg id="coffee-chart" class="bar-chart" role="img" aria-label="Saldo mensile in bevande per persona"></svg>
+            </div>
+            <div id="coffee-chart-empty" class="empty-state chart-empty" hidden>Nessun movimento nel periodo selezionato.</div>
+          </article>
+
+          <article class="panel chart-card">
+            <div class="chart-heading">
+              <p class="eyebrow">SALDO IN EURO</p>
+              <h2>Crediti e debiti</h2>
+              <p>Quanto ho pagato per quella persona, al netto di quanto ha pagato per me.</p>
+            </div>
+            <div class="chart-scroll">
+              <svg id="euro-chart" class="bar-chart" role="img" aria-label="Saldo mensile in euro per persona"></svg>
+            </div>
+            <div id="euro-chart-empty" class="empty-state chart-empty" hidden>Nessun movimento nel periodo selezionato.</div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>I dati restano in questo browser.</span>
+        <span>Una bevanda alla volta ☕</span>
+      </footer>
+    </main>
+  </body>
+</html>

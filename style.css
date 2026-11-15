@@ -1301,3 +1301,7 @@ body {
 * {
   outline: 1px solid red !important;
 }
+html,
+body {
+  background: red !important;
+}

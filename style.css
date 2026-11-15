@@ -144,11 +144,9 @@ select {
 }
 
 .page {
-  max-width: 1120px;
-  width: 100%;
+  width: min(1120px, calc(100% - 44px));
   margin: 0 auto;
-  padding: 43px 22px 30px;
-  box-sizing: border-box;
+  padding: 43px 0 30px;
 }
 
 .intro {
@@ -1211,15 +1209,6 @@ tbody tr:last-child td {
   justify-content: flex-start;
 }
 
-.brand {
-  width: 100%;
-  min-width: 0;
-}
-
-.brand-copy {
-  min-width: 0;
-}
-
   .brand-tagline {
     max-width: 135px;
     font-size: 10px;
@@ -1240,12 +1229,10 @@ tbody tr:last-child td {
   }
 
 .page {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 30px 16px 0;
-    box-sizing: border-box;
-  }
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  padding-top: 30px;
+}
 
   .intro {
     align-items: flex-start;
@@ -1312,8 +1299,4 @@ tbody tr:last-child td {
     gap: 10px;
     flex-direction: column;
   }
-}
-html,
-body {
-  overflow-x: hidden;
 }

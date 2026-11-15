@@ -1289,3 +1289,7 @@ tbody tr:last-child td {
     flex-direction: column;
   }
 }
+html,
+body {
+  overflow-x: hidden;
+}

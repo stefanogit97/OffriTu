@@ -219,6 +219,12 @@ function getPeople(periodEntries) {
 }
 
 function renderSummary(periodEntries) {
+  const beveragesOfferedByMe = periodEntries.reduce((sum, entry) => (
+  getPersonKey(entry.payer) === selfKey &&
+  getPersonKey(entry.drinker) !== selfKey
+    ? sum + entry.quantity
+    : sum
+), 0);
   const beveragesConsumedByMe = periodEntries.reduce((sum, entry) => (
     getPersonKey(entry.drinker) === selfKey ? sum + entry.quantity : sum
   ), 0);
@@ -235,7 +241,7 @@ function renderSummary(periodEntries) {
     : monthSelect.value
       ? monthFormatter.format(new Date(`${monthSelect.value}-01T12:00:00`))
       : "Seleziona un mese";
-
+  document.querySelector("#total-offered-by-me").textContent = String(beveragesOfferedByMe);
   document.querySelector("#total-beverages").textContent = String(beveragesConsumedByMe);
   document.querySelector("#total-paid-by-me").textContent = formatMoney(paidByMe);
   document.querySelector("#total-owed-to-me").textContent = formatMoney(credit);

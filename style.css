@@ -1243,9 +1243,10 @@ tbody tr:last-child td {
     flex: 1;
   }
 
-  .summary-grid {
-    gap: 10px;
-  }
+ .summary-grid {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
 
   .summary-card {
     min-height: 117px;

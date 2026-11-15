@@ -144,9 +144,11 @@ select {
 }
 
 .page {
-  width: min(1120px, calc(100% - 44px));
+  max-width: 1120px;
+  width: 100%;
   margin: 0 auto;
-  padding: 43px 0 30px;
+  padding: 43px 22px 30px;
+  box-sizing: border-box;
 }
 
 .intro {

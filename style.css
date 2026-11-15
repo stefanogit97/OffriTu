@@ -675,8 +675,11 @@ tbody tr:last-child td {
 }
 
 .balance-report-table {
-  width: 100%;
-  min-width: 0;
+  min-width: 700px;
+}
+
+.balance-report-panel {
+  overflow-x: auto;
 }
 
 .charts-panel {

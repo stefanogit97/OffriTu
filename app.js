@@ -288,12 +288,18 @@ function renderPeople(periodEntries) {
     const scroungeValue = document.createElement("span");
     scroungeValue.className = "scrounge-value";
     const indexText = person.index === null
-      ? "—"
-      : Number.isFinite(person.index)
-        ? `${Math.round(person.index * 100)}%`
-        : "∞";
-    scroungeValue.textContent = indexText;
-    scroungeValue.setAttribute("aria-label", `Indice ${indexText}: ${person.offered} offerte a me diviso ${person.received} ricevute da me`);
+  ? "—"
+  : Number.isFinite(person.index)
+    ? `${Math.round(person.index * 100)}%`
+    : "";
+    if (indexText) {
+  scroungeValue.textContent = indexText;
+  scroungeValue.setAttribute(
+    "aria-label",
+    `Indice dello scrocco ${indexText}`
+  );
+  scroungeCell.append(scroungeValue);
+}
     const badge = document.createElement("span");
     badge.className = `scrounge-badge scrounge-${person.level}`;
     badge.textContent = person.label;

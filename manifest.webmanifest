@@ -1,10 +1,10 @@
 {
-  "id": "/offritu",
+  "id": "/",
   "name": "OffriTu",
   "short_name": "OffriTu",
   "description": "Registro caffè e spese tra colleghi",
-  "start_url": "/OffriTu-/",
-  "scope": "/OffriTu-/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f7efe7",
   "theme_color": "#70472f",

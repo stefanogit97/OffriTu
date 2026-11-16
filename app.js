@@ -653,18 +653,23 @@ function renderCharts() {
     const totalCents = entry.quantity * entry.unitPriceCents;
 
     if (drinkerKey === selfKey && payerKey !== selfKey) {
-      const person = month.values.get(payerKey);
-      if (!person) continue;
-      month.hasMovement = true;
-      person.beverageBalance -= entry.quantity;
-      person.balanceCents -= totalCents;
-    } else if (payerKey === selfKey && drinkerKey !== selfKey) {
-      const person = month.values.get(drinkerKey);
-      if (!person) continue;
-      month.hasMovement = true;
-      person.beverageBalance += entry.quantity;
-      person.balanceCents += totalCents;
-    }
+  const person = month.values.get(payerKey);
+  if (!person) continue;
+
+  month.hasMovement = true;
+
+  person.beverageBalance += entry.quantity;
+  person.balanceCents += totalCents;
+
+} else if (payerKey === selfKey && drinkerKey !== selfKey) {
+  const person = month.values.get(drinkerKey);
+  if (!person) continue;
+
+  month.hasMovement = true;
+
+  person.beverageBalance -= entry.quantity;
+  person.balanceCents -= totalCents;
+}
   }
 
   drawBalanceChart(

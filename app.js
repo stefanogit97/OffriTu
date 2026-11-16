@@ -23,8 +23,8 @@ const movementCsvButton = document.querySelector("#movement-csv-button");
 const selfKey = "io";
 const monthFormatter = new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" });
 const euroFormatter = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" });
-const chartCreditColor = "#31804f";
-const chartDebtColor = "#b33e38";
+const chartGainColor = "#31804f";
+const chartLossColor = "#b33e38";
 const chartNeutralColor = "#c8c0b7";
 const productOptions = ["Caffè", "Cappuccino", "Tè", "Cioccolata", "Caffè premium"];
 
@@ -232,9 +232,9 @@ function renderSummary(periodEntries) {
     getPersonKey(entry.payer) === selfKey ? sum + entry.quantity * entry.unitPriceCents : sum
   ), 0);
   const people = getPeople(periodEntries);
-  const credit = people.reduce((sum, person) => sum + Math.max(0, person.balanceCents), 0);
-  const debt = people.reduce((sum, person) => sum + Math.max(0, -person.balanceCents), 0);
-  const netBalance = credit - debt;
+  const gain = people.reduce((sum, person) => sum + Math.max(0, -person.balanceCents),0);
+  const loss = people.reduce((sum, person) => sum + Math.max(0, person.balanceCents),0);
+  const netBalance = gain - loss;
   const netBalanceCard = document.querySelector("#net-balance-card");
   const periodLabel = periodSelect.value === "all"
     ? "Da sempre"
@@ -244,17 +244,17 @@ function renderSummary(periodEntries) {
   document.querySelector("#total-offered-by-me").textContent = String(beveragesOfferedByMe);
   document.querySelector("#total-beverages").textContent = String(beveragesConsumedByMe);
   document.querySelector("#total-paid-by-me").textContent = formatMoney(paidByMe);
-  document.querySelector("#total-owed-to-me").textContent = formatMoney(credit);
-  document.querySelector("#total-i-owe").textContent = formatMoney(debt);
+  document.querySelector("#total-owed-to-me").textContent = formatMoney(loss);
+  document.querySelector("#total-i-owe").textContent = formatMoney(gain);
   document.querySelector("#total-net-balance").textContent = netBalance > 0
     ? `+${formatMoney(netBalance)}`
     : formatMoney(netBalance);
   document.querySelector("#period-caption").textContent = periodLabel;
   document.querySelector("#net-balance-status").textContent = netBalance > 0
-    ? `Sei in credito · ${periodLabel}`
+    ? `Sei in gain · ${periodLabel}`
     : netBalance < 0
-      ? `Sei in debito · ${periodLabel}`
-      : `In pari · ${periodLabel}`;
+      ? `Sei in perdita · ${periodLabel}`
+      : `Sei in pari · ${periodLabel}`;
   netBalanceCard.classList.remove("summary-net-positive", "summary-net-negative", "summary-net-neutral");
   netBalanceCard.classList.add(netBalance > 0
     ? "summary-net-positive"
@@ -312,14 +312,17 @@ function renderPeople(periodEntries) {
     scroungeCell.append(scroungeValue, badge);
     row.append(scroungeCell);
 
-    const balanceClass = person.balanceCents > 0
+    const balanceClass = person.balanceCents < 0
       ? "balance balance-positive align-right"
-      : person.balanceCents < 0
+      : person.balanceCents > 0
         ? "balance balance-negative align-right"
         : "balance balance-zero align-right";
-    const balanceText = person.balanceCents > 0
-      ? `+${formatMoney(person.balanceCents)}`
-      : formatMoney(person.balanceCents);
+    const balanceText =
+     person.balanceCents > 0
+    ? `Perdita ${formatMoney(person.balanceCents)}`
+    : person.balanceCents < 0
+      ? `Gain ${formatMoney(Math.abs(person.balanceCents))}`
+      : "In pari";
     row.append(createCell(balanceText, balanceClass));
     peopleList.append(row);
   }
@@ -571,7 +574,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
         width: barWidth,
         height: Math.max(1, Math.abs(zeroY - valueY)),
         rx: 3,
-        fill: value > 0 ? chartCreditColor : value < 0 ? chartDebtColor : chartNeutralColor,
+        fill: value < 0 ? chartGainColor : value > 0 ? chartLossColor : chartNeutralColor,
         stroke: "none",
         class: "chart-bar",
         tabindex: 0,

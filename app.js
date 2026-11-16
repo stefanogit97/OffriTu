@@ -583,7 +583,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
         width: barWidth,
         height: Math.max(1, Math.abs(zeroY - valueY)),
         rx: 3,
-        fill: value > 0 ? chartGainColor : value < 0 ? chartLossColor : chartNeutralColor,
+        fill: value > 0 ? chartLossColor : value < 0 ? chartGainColor : chartNeutralColor,
         stroke: "none",
         class: "chart-bar",
         tabindex: 0,

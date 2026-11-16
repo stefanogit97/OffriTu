@@ -255,6 +255,9 @@ function renderSummary(periodEntries) {
     ? `+${formatMoney(netBalance)}`
     : formatMoney(netBalance);
   document.querySelector("#period-caption").textContent = periodLabel;
+  document.querySelector("#footer-paid-coffees").textContent = periodLabel;
+  document.querySelector("#footer-paid-money").textContent = periodLabel;
+  document.querySelector("#footer-received-money").textContent = periodLabel;
   document.querySelector("#net-balance-status").textContent =
   netBalance > 0
     ? `Sei in gain di ${formatMoney(netBalance)} · ${periodLabel}`

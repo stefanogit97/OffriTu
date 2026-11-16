@@ -668,6 +668,7 @@ tbody tr:last-child td {
 }
 
 .history-panel {
+  margin-top: 32px;
   padding: 22px 23px 10px;
 }
 

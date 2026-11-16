@@ -153,20 +153,28 @@
             </form>
           </section>
 
-          <section class="panel">
-            <div class="field">
-              <label for="period-select">Periodo</label>
-              <select id="period-select">
-                <option value="all">Da sempre</option>
-                <option value="month">Questo mese</option>
-              </select>
-              <input
-                id="month-select"
-                type="month"
-                aria-label="Seleziona il mese"
-                hidden>
-             </div>
-           </section>
+          <section class="panel period-panel">
+  <div class="panel-heading">
+    <div>
+      <p class="eyebrow">FILTRO</p>
+      <h2>Periodo</h2>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="period-select">Periodo</label>
+    <select id="period-select">
+      <option value="all">Da sempre</option>
+      <option value="month">Questo mese</option>
+    </select>
+
+    <input
+      id="month-select"
+      type="month"
+      aria-label="Seleziona il mese"
+      hidden>
+  </div>
+</section>
 
           <section class="summary-grid" aria-label="Riepilogo del periodo">
           <article class="summary-card">

@@ -255,11 +255,12 @@ function renderSummary(periodEntries) {
     ? `+${formatMoney(netBalance)}`
     : formatMoney(netBalance);
   document.querySelector("#period-caption").textContent = periodLabel;
-  document.querySelector("#net-balance-status").textContent = netBalance > 0
-    ? `Sei in gain · ${periodLabel}`
+  document.querySelector("#net-balance-status").textContent =
+  netBalance > 0
+    ? `Sei in gain di ${formatMoney(netBalance)} · ${periodLabel}`
     : netBalance < 0
-      ? `Sei in perdita · ${periodLabel}`
-      : `Sei in pari · ${periodLabel}`;
+      ? `Sei in perdita di ${formatMoney(Math.abs(netBalance))} · ${periodLabel}`
+      : `In pari · ${periodLabel}`;
   netBalanceCard.classList.remove("summary-net-positive", "summary-net-negative", "summary-net-neutral");
   netBalanceCard.classList.add(netBalance > 0
     ? "summary-net-positive"

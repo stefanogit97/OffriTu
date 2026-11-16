@@ -232,9 +232,15 @@ function renderSummary(periodEntries) {
     getPersonKey(entry.payer) === selfKey ? sum + entry.quantity * entry.unitPriceCents : sum
   ), 0);
   const people = getPeople(periodEntries);
-  const gain = people.reduce((sum, person) => sum + Math.max(0, -person.balanceCents),0);
-  const loss = people.reduce((sum, person) => sum + Math.max(0, person.balanceCents),0);
-  const netBalance = gain - loss;
+  const totalOfferedToMe = periodEntries.reduce(
+  (sum, entry) =>
+    getPersonKey(entry.drinker) === selfKey &&
+    getPersonKey(entry.payer) !== selfKey
+      ? sum + entry.quantity * entry.unitPriceCents
+      : sum,
+  0
+);
+  const netBalance = totalOfferedToMe - paidByMe;
   const netBalanceCard = document.querySelector("#net-balance-card");
   const periodLabel = periodSelect.value === "all"
     ? "Da sempre"
@@ -244,8 +250,7 @@ function renderSummary(periodEntries) {
   document.querySelector("#total-offered-by-me").textContent = String(beveragesOfferedByMe);
   document.querySelector("#total-beverages").textContent = String(beveragesConsumedByMe);
   document.querySelector("#total-paid-by-me").textContent = formatMoney(paidByMe);
-  document.querySelector("#total-owed-to-me").textContent = formatMoney(loss);
-  document.querySelector("#total-i-owe").textContent = formatMoney(gain);
+  document.querySelector("#total-offered-to-me").textContent = formatMoney(totalOfferedToMe);
   document.querySelector("#total-net-balance").textContent = netBalance > 0
     ? `+${formatMoney(netBalance)}`
     : formatMoney(netBalance);

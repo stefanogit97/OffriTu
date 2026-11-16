@@ -286,8 +286,8 @@ h1 {
 }
 
 .period-panel {
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 23px;
 }
 
@@ -362,7 +362,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(260px, 0.88fr) minmax(0, 1.7fr);
   gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .content-grid,

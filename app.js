@@ -256,8 +256,11 @@ function renderSummary(periodEntries) {
   const periodLabel = periodSelect.value === "all"
     ? "Da sempre"
     : monthSelect.value
-      ? monthFormatter.format(new Date(`${monthSelect.value}-01T12:00:00`))
-      : "Seleziona un mese";
+  ? (() => {
+      const label = monthFormatter.format(new Date(`${monthSelect.value}-01T12:00:00`));
+      return label.charAt(0).toLocaleUpperCase("it") + label.slice(1);
+    })()
+  : "Seleziona un mese";
   document.querySelector("#total-offered-by-me").textContent = String(beveragesOfferedByMe);
   document.querySelector("#total-beverages").textContent = String(beveragesConsumedByMe);
   document.querySelector("#total-paid-by-me").textContent = formatMoney(paidByMe);

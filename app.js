@@ -750,6 +750,15 @@ function render() {
 function setDefaultMonth() {
   monthSelect.value = localDateString().slice(0, 7);
 }
+function capitalizeMonthSelect() {
+  const label = monthSelect.value
+    ? monthFormatter.format(new Date(`${monthSelect.value}-01T12:00:00`))
+    : "";
+
+  if (label) {
+    monthSelect.setAttribute("aria-label", `Seleziona il mese: ${label.charAt(0).toLocaleUpperCase("it") + label.slice(1)}`);
+  }
+}
 
 function updatePeriodControls() {
   monthSelect.hidden = periodSelect.value !== "month";

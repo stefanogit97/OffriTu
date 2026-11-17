@@ -334,71 +334,6 @@ function renderPeople(periodEntries) {
   }
 }
 
-function renderBalanceSummary() {
-
-  const periodEntries = selectedEntries();
-
-  let coffeeBalance = 0;
-  let euroBalance = 0;
-
-  for (const entry of periodEntries) {
-
-    const payer = getPersonKey(entry.payer);
-    const drinker = getPersonKey(entry.drinker);
-
-    const total =
-      entry.quantity * entry.unitPriceCents;
-
-    if (payer === selfKey && drinker !== selfKey) {
-      coffeeBalance += entry.quantity;
-      euroBalance += total;
-    }
-
-    if (drinker === selfKey && payer !== selfKey) {
-      coffeeBalance -= entry.quantity;
-      euroBalance -= total;
-    }
-  }
-
-  const periodLabel =
-    periodSelect.value === "all"
-      ? "Da sempre"
-      : monthFormatter.format(
-          new Date(`${monthSelect.value}-01`)
-        );
-
-  document.querySelector("#balance-period-label").textContent =
-    periodLabel;
-
-  if (coffeeBalance > 0) {
-
-    document.querySelector("#balance-summary-coffee").textContent =
-      `Gain ${coffeeBalance} ☕`;
-
-    document.querySelector("#balance-summary-euro").textContent =
-      `Gain ${formatMoney(euroBalance)}`;
-
-  } else if (coffeeBalance < 0) {
-
-    document.querySelector("#balance-summary-coffee").textContent =
-      `Perdita ${Math.abs(coffeeBalance)} ☕`;
-
-    document.querySelector("#balance-summary-euro").textContent =
-      `Perdita ${formatMoney(Math.abs(euroBalance))}`;
-
-  } else {
-
-    document.querySelector("#balance-summary-coffee").textContent =
-      "In pari";
-
-    document.querySelector("#balance-summary-euro").textContent =
-      formatMoney(0);
-  }
-}
-  
-
-
-
 function renderHistory(periodEntries) {
   const sortedEntries = [...periodEntries].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
   historyList.replaceChildren();
@@ -724,7 +659,6 @@ function render() {
   const periodEntries = selectedEntries();
   renderSummary(periodEntries);
   renderPeople(periodEntries);
-  renderBalanceSummary();
   renderHistory(periodEntries);
   if (!chartsPanel.hidden) renderCharts();
 }

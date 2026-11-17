@@ -262,12 +262,30 @@
               <h2 id="history-heading">Movimenti</h2>
             </div>
             <div class="history-actions">
-              <button id="movement-csv-button" class="button button-secondary" type="button">Esporta CSV</button>
-              <button class="button button-secondary export-backup-button" type="button">Esporta backup</button>
-              <label class="button button-secondary import-label" for="movement-import-file">Importa backup</label>
-              <button class="button button-secondary pdf-button" type="button">Esporta PDF</button>
-              <input id="movement-import-file" class="import-file" type="file" accept="application/json,.json" hidden>
-            </div>
+  <label class="button button-secondary import-label" for="movement-import-file">
+    Importa backup
+  </label>
+
+  <button class="button button-secondary export-backup-button" type="button">
+    Esporta backup
+  </button>
+
+  <button id="movement-csv-button" class="button button-secondary" type="button">
+    Esporta CSV
+  </button>
+
+  <button class="button button-secondary pdf-button" type="button">
+    Esporta PDF
+  </button>
+
+  <input
+    id="movement-import-file"
+    class="import-file"
+    type="file"
+    accept="application/json,.json"
+    hidden
+  >
+</div>
           </div>
           <div class="table-wrap history-table-wrap">
             <table>

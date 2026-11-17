@@ -539,7 +539,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
   }
 
   const groupWidth = plotWidth / months.length;
-  const slotWidth = groupWidth / people.length;
+  const slotWidth = Math.min(groupWidth / people.length, 76);
   const barWidth = Math.min(36, slotWidth * 0.42);
 
   months.forEach((month, monthIndex) => {
@@ -550,7 +550,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
       const balance = monthData.values.get(person.key);
       const value = isEuro ? balance.balanceCents / 100 : balance.beverageBalance;
       const valueY = yFor(value);
-      const barCenter = margin.left + groupWidth * monthIndex + slotWidth * (personIndex + 0.5);
+      const barCenter = groupCenter + (personIndex - (people.length - 1) / 2) * slotWidth;
       const bar = svgElement("rect", {
         x: barCenter - barWidth / 2,
         y: Math.min(zeroY, valueY),

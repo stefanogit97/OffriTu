@@ -1367,3 +1367,23 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+
+/* Allineamento colonne dei saldi */
+.people-panel table th:nth-child(2),
+.people-panel table td:nth-child(2),
+.people-panel table th:nth-child(3),
+.people-panel table td:nth-child(3),
+.people-panel table th:nth-child(4),
+.people-panel table td:nth-child(4) {
+  text-align: center;
+}
+
+/* Saldo Euro: Gain verde, Perdita rossa */
+.people-panel td.balance-positive {
+  color: #31804f;
+}
+
+.people-panel td.balance-negative {
+  color: #b33e38;
+}
+

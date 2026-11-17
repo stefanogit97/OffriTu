@@ -29,7 +29,15 @@ const euroFormatter = new Intl.NumberFormat("it-IT", { style: "currency", curren
 const chartGainColor = "#31804f";
 const chartLossColor = "#b33e38";
 const chartNeutralColor = "#c8c0b7";
-const productOptions = ["Caffè", "Cappuccino", "Tè", "Cioccolata", "Caffè premium"];
+const productOptions = [
+  "Caffè",
+  "Caffè macchiato",
+  "Caffè al ginseng",
+  "Cappuccino",
+  "Tè",
+  "Cioccolata",
+  "Caffè premium"
+];
 
 let entries = [];
 

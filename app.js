@@ -632,12 +632,15 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
 function renderCharts() {
   const allPeople = getChartPeople();
   refreshChartPeople(allPeople);
+
   const selectedPerson = chartPersonSelect.value;
+  const availableMonths = getChartMonths("all", selectedPerson);
+  refreshChartRanges(availableMonths);
   const people = selectedPerson === "all"
-    const availableMonths = getChartMonths("all", selectedPerson);
-   refreshChartRanges(availableMonths);
-    ? allPeople
-    : allPeople.filter((person) => `person:${person.key}` === selectedPerson);
+  ? allPeople
+  : allPeople.filter(
+      (person) => `person:${person.key}` === selectedPerson
+    );
   const months = getChartMonths(chartRangeSelect.value, selectedPerson);
   const monthlyData = months.map((month) => ({
     hasMovement: false,

@@ -689,10 +689,14 @@ function activateTab(selectedTab) {
 
 function render() {
   const periodEntries = selectedEntries();
+
   renderSummary(periodEntries);
   renderPeople(periodEntries);
   renderHistory(periodEntries);
-  if (!chartsPanel.hidden) renderCharts();
+
+  if (!chartsPanel.hidden) {
+    renderCharts();
+  }
 }
 
 function setDefaultMonth() {

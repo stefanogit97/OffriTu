@@ -462,8 +462,14 @@ function getChartMonths(range, selectedPerson) {
   return visibleMonthKeys.map((key) => {
     const [year, month] = key.split("-").map(Number);
     const date = new Date(year, month - 1, 1);
-    const monthName = new Intl.DateTimeFormat("it-IT", { month: "short" }).format(date);
-    return { key, label: `${monthName} '${String(year).slice(-2)}` };
+    const monthName = new Intl.DateTimeFormat("it-IT", {
+  month: "long",
+  year: "numeric"
+}).format(date);
+
+const label = monthName.charAt(0).toLocaleUpperCase("it") + monthName.slice(1);
+
+return { key, label };
   });
 }
 

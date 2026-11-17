@@ -337,13 +337,6 @@ function renderPeople(periodEntries) {
   }
 }
 
-function getBalanceSummaryRows() {
-  const entriesByMonth = new Map();
-  for (const entry of entries) {
-    const monthKey = entry.date.slice(0, 7);
-    if (!entriesByMonth.has(monthKey)) entriesByMonth.set(monthKey, []);
-    entriesByMonth.get(monthKey).push(entry);
-  }
 
   const rows = [];
   for (const monthKey of [...entriesByMonth.keys()].sort()) {
@@ -363,23 +356,103 @@ function getBalanceSummaryRows() {
 }
 
 function renderBalanceSummary() {
-  const rows = getBalanceSummaryRows();
-  balanceReportList.replaceChildren();
-  balanceReportEmpty.hidden = rows.length > 0;
-  summaryExportButton.disabled = rows.length === 0;
 
-  for (const person of rows) {
-    const row = document.createElement("tr");
-    row.append(
-      createCell(person.period),
-      createCell(person.name, "person-name"),
-      createCell(String(Math.max(0, person.beverageBalance)), "align-right balance balance-positive"),
-      createCell(String(Math.max(0, -person.beverageBalance)), "align-right balance balance-negative"),
-      createCell(formatMoney(Math.max(0, person.balanceCents)), "align-right balance balance-positive"),
-      createCell(formatMoney(Math.max(0, -person.balanceCents)), "align-right balance balance-negative")
-    );
-    balanceReportList.append(row);
-  }
+  const monthEntries =
+    monthSelect.value
+      ? entries.filter(entry =>
+          entry.date.startsWith(monthSelect.value))
+      : [];
+
+  const monthCoffee =
+    monthEntries.reduce((sum, entry) => {
+
+      const payer = getPersonKey(entry.payer);
+      const drinker = getPersonKey(entry.drinker);
+
+      if (payer === selfKey && drinker !== selfKey) {
+        return sum + entry.quantity;
+      }
+
+      if (drinker === selfKey && payer !== selfKey) {
+        return sum - entry.quantity;
+      }
+
+      return sum;
+
+    }, 0);
+
+  const monthEuro =
+    monthEntries.reduce((sum, entry) => {
+
+      const payer = getPersonKey(entry.payer);
+      const drinker = getPersonKey(entry.drinker);
+
+      const total =
+        entry.quantity * entry.unitPriceCents;
+
+      if (payer === selfKey && drinker !== selfKey) {
+        return sum + total;
+      }
+
+      if (drinker === selfKey && payer !== selfKey) {
+        return sum - total;
+      }
+
+      return sum;
+
+    }, 0);
+
+  const totalCoffee =
+    entries.reduce((sum, entry) => {
+
+      const payer = getPersonKey(entry.payer);
+      const drinker = getPersonKey(entry.drinker);
+
+      if (payer === selfKey && drinker !== selfKey) {
+        return sum + entry.quantity;
+      }
+
+      if (drinker === selfKey && payer !== selfKey) {
+        return sum - entry.quantity;
+      }
+
+      return sum;
+
+    }, 0);
+
+  const totalEuro =
+    entries.reduce((sum, entry) => {
+
+      const payer = getPersonKey(entry.payer);
+      const drinker = getPersonKey(entry.drinker);
+
+      const total =
+        entry.quantity * entry.unitPriceCents;
+
+      if (payer === selfKey && drinker !== selfKey) {
+        return sum + total;
+      }
+
+      if (drinker === selfKey && payer !== selfKey) {
+        return sum - total;
+      }
+
+      return sum;
+
+    }, 0);
+
+  document.querySelector("#month-summary-coffee").textContent =
+    `${monthCoffee > 0 ? "+" : ""}${monthCoffee} ☕`;
+
+  document.querySelector("#month-summary-euro").textContent =
+    `${monthEuro > 0 ? "+" : ""}${formatMoney(monthEuro)}`;
+
+  document.querySelector("#all-summary-coffee").textContent =
+    `${totalCoffee > 0 ? "+" : ""}${totalCoffee} ☕`;
+
+  document.querySelector("#all-summary-euro").textContent =
+    `${totalEuro > 0 ? "+" : ""}${formatMoney(totalEuro)}`;
+
 }
 
 function renderHistory(periodEntries) {

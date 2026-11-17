@@ -422,6 +422,28 @@ function refreshChartPeople(people) {
     : "all";
 }
 
+function refreshChartRanges(months) {
+  const previousSelection = chartRangeSelect.value || "all";
+
+  chartRangeSelect.replaceChildren();
+
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "Da sempre";
+  chartRangeSelect.append(allOption);
+
+  for (const month of months) {
+    const option = document.createElement("option");
+    option.value = month.key;
+    option.textContent = month.label;
+    chartRangeSelect.append(option);
+  }
+
+  chartRangeSelect.value = months.some(
+    (month) => month.key === previousSelection
+  ) ? previousSelection : "all";
+}
+
 function getChartMonths(range, selectedPerson) {
   const selectedKey = selectedPerson === "all" ? null : selectedPerson.slice("person:".length);
   const monthKeys = [...new Set(entries.filter((entry) => {
@@ -431,7 +453,11 @@ function getChartMonths(range, selectedPerson) {
     if (payerKey === selfKey && drinkerKey !== selfKey) return !selectedKey || drinkerKey === selectedKey;
     return false;
   }).map((entry) => entry.date.slice(0, 7)))].sort();
-  const visibleMonthKeys = range === "all" ? monthKeys : monthKeys.slice(-Number(range));
+  const visibleMonthKeys = range === "all"
+  ? monthKeys
+  : monthKeys.includes(range)
+    ? [range]
+    : monthKeys;
 
   return visibleMonthKeys.map((key) => {
     const [year, month] = key.split("-").map(Number);
@@ -608,6 +634,8 @@ function renderCharts() {
   refreshChartPeople(allPeople);
   const selectedPerson = chartPersonSelect.value;
   const people = selectedPerson === "all"
+    const availableMonths = getChartMonths("all", selectedPerson);
+   refreshChartRanges(availableMonths);
     ? allPeople
     : allPeople.filter((person) => `person:${person.key}` === selectedPerson);
   const months = getChartMonths(chartRangeSelect.value, selectedPerson);

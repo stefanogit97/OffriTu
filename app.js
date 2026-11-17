@@ -326,20 +326,21 @@ function renderPeople(periodEntries) {
     badge.className = `scrounge-badge scrounge-${person.level}`;
     badge.textContent = person.label;
     scroungeCell.append(scroungeValue, badge);
-    row.append(scroungeCell);
-
     const balanceClass = person.balanceCents < 0
-      ? "balance balance-positive align-right"
-      : person.balanceCents > 0
-        ? "balance balance-negative align-right"
-        : "balance balance-zero align-right";
-    const balanceText =
-     person.balanceCents > 0
+  ? "balance balance-positive align-right"
+  : person.balanceCents > 0
+    ? "balance balance-negative align-right"
+    : "balance balance-zero align-right";
+
+const balanceText =
+  person.balanceCents > 0
     ? `Perdita ${formatMoney(person.balanceCents)}`
     : person.balanceCents < 0
       ? `Gain ${formatMoney(Math.abs(person.balanceCents))}`
       : "In pari";
-    row.append(createCell(balanceText, balanceClass));
+
+row.append(createCell(balanceText, balanceClass));
+row.append(scroungeCell);
     peopleList.append(row);
   }
 }

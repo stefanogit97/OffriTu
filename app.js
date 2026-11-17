@@ -529,7 +529,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
   const nameLines = people.map((person) => wrapChartName(person.name));
   const maxNameLines = Math.max(...nameLines.map((lines) => lines.length));
   const plotHeight = 245;
-  const margin = { top: 24, right: 20, bottom: maxNameLines * 12 + 46, left: 62 };
+  const margin = { top: 24, right: 20, bottom: maxNameLines * 12 + 46, left: 42 };
   const groupStep = Math.max(130, people.length * 76 + 24);
   const contentWidth = margin.left + margin.right + months.length * groupStep;
   const width = contentWidth;

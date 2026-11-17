@@ -14,8 +14,12 @@ const registerTab = document.querySelector("#tab-registro");
 const chartsTab = document.querySelector("#tab-grafici");
 const movementsTab = document.querySelector("#tab-movimenti");
 const movementsPanel = document.querySelector("#panel-movimenti");
+console.log("movementsPanel", movementsPanel);
 const registerPanel = document.querySelector("#panel-registro");
 const chartsPanel = document.querySelector("#panel-grafici");
+registerPanel.hidden = false;
+movementsPanel.hidden = true;
+chartsPanel.hidden = true;
 const chartRangeSelect = document.querySelector("#chart-range");
 const chartPersonSelect = document.querySelector("#chart-person");
 const movementCsvButton = document.querySelector("#movement-csv-button");
@@ -430,11 +434,19 @@ function getChartMonths(range, selectedPerson) {
 }
 
 function svgElement(name, attributes = {}, text = "") {
-  const element = document.createElementNS("http://www.w3.org/2000/svg", name);
+  const element = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    name
+  );
+
   for (const [attribute, value] of Object.entries(attributes)) {
     element.setAttribute(attribute, String(value));
   }
-  if (text) element.textContent = text;
+
+  if (text) {
+    element.textContent = text;
+  }
+
   return element;
 }
 

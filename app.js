@@ -16,7 +16,6 @@ const registerPanel = document.querySelector("#panel-registro");
 const chartsPanel = document.querySelector("#panel-grafici");
 const chartRangeSelect = document.querySelector("#chart-range");
 const chartPersonSelect = document.querySelector("#chart-person");
-const summaryExportButton = document.querySelector("#summary-export-button");
 const movementCsvButton = document.querySelector("#movement-csv-button");
 const selfKey = "io";
 const monthFormatter = new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" });
@@ -336,22 +335,7 @@ function renderPeople(periodEntries) {
 }
 
 
-  const rows = [];
-  for (const monthKey of [...entriesByMonth.keys()].sort()) {
-    const periodEntries = entriesByMonth.get(monthKey);
-    const [year, month] = monthKey.split("-").map(Number);
-    const period = monthFormatter.format(new Date(year, month - 1, 1));
-    for (const person of getPeople(periodEntries)) {
-      rows.push({ period, ...person });
-    }
-  }
-
-  for (const person of getPeople(entries)) {
-    rows.push({ period: "Dall'inizio", ...person });
-  }
-
-  return rows;
-}
+  
 
 function renderBalanceSummary() {
 
@@ -884,23 +868,7 @@ document.querySelectorAll(".export-backup-button").forEach((button) => {
   button.addEventListener("click", exportBackup);
 });
 
-summaryExportButton.addEventListener("click", () => {
-  const rows = getBalanceSummaryRows();
-  if (!rows.length) return;
 
-  const csvRows = [
-    ["Periodo", "Persona", "Bevande a credito", "Bevande a debito", "Credito (€)", "Debito (€)"],
-    ...rows.map((person) => [
-      person.period,
-      person.name,
-      Math.max(0, person.beverageBalance),
-      Math.max(0, -person.beverageBalance),
-      formatCsvMoney(Math.max(0, person.balanceCents)),
-      formatCsvMoney(Math.max(0, -person.balanceCents))
-    ])
-  ];
-  downloadCsv(csvRows, `offritu-riepilogo-${localDateString()}.csv`, "Riepilogo scaricato.");
-});
 
 movementCsvButton.addEventListener("click", () => {
   const movementEntries = [...selectedEntries()].sort((a, b) => (
@@ -969,7 +937,6 @@ try {
   form.querySelectorAll("input, button").forEach((control) => { control.disabled = true; });
   document.querySelectorAll(".export-backup-button, .import-file").forEach((control) => { control.disabled = true; });
   movementCsvButton.disabled = true;
-  summaryExportButton.disabled = true;
 }
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./service-worker.js");

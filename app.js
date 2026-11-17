@@ -299,11 +299,7 @@ function renderPeople(periodEntries) {
     nameCell.append(total);
     row.append(nameCell);
 
-    const beverageBalanceClass = person.beverageBalance > 0
-      ? "balance balance-positive"
-      : person.beverageBalance < 0
-        ? "balance balance-negative"
-        : "balance balance-zero";
+    const beverageBalanceClass = "balance balance-zero";
     const beverageBalanceText = person.beverageBalance > 0
       ? `+${person.beverageBalance}`
       : String(person.beverageBalance);

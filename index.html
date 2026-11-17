@@ -170,29 +170,24 @@
             </form>
           </section>
 
-          <section class="panel period-panel">
-            <div class="panel-heading">
-              <div>
-                <h2>Seleziona periodo</h2>
-              </div>
-            </div>
-
-            <div class="period-control period-control-card">
-
-              <select id="period-select">
-                <option value="all">Da sempre</option>
-                <option value="month">Questo mese</option>
-              </select>
-
-              <input
-                id="month-select"
-                type="month"
-                aria-label="Seleziona il mese"
-                hidden>
-            </div>
-          </section>
-
           <section class="summary-grid" aria-label="Riepilogo del periodo">
+            <article class="summary-card period-summary-card">
+  <div class="period-summary-title">Riepilogo</div>
+  <div class="period-summary-subtitle">Seleziona periodo</div>
+
+  <div class="period-control period-control-card">
+    <select id="period-select">
+      <option value="all">Da sempre</option>
+      <option value="month">Questo mese</option>
+    </select>
+
+    <input
+      id="month-select"
+      type="month"
+      aria-label="Seleziona il mese"
+      hidden>
+  </div>
+</article>
           <article class="summary-card">
               <span class="summary-label">Bevande pagate da me</span>
               <strong id="total-offered-by-me">0</strong>

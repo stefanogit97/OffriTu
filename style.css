@@ -1386,4 +1386,23 @@ body {
 .people-panel td.balance-negative {
   color: #b33e38;
 }
+.net-balance-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: nowrap;
+}
+
+.net-balance-period {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.net-balance-dot {
+  font-size: 1rem;
+}
 

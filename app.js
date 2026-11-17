@@ -266,6 +266,7 @@ function renderSummary(periodEntries) {
     ? `+${formatMoney(netBalance)}`
     : formatMoney(netBalance);
   document.querySelector("#period-caption").textContent = periodLabel;
+  document.querySelector("#net-balance-period").textContent = periodLabel;
   document.querySelector("#footer-paid-coffees").textContent = periodLabel;
   document.querySelector("#footer-paid-money").textContent = periodLabel;
   document.querySelector("#footer-received-money").textContent = periodLabel;

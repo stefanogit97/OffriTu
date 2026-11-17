@@ -12,6 +12,8 @@ const peopleList = document.querySelector("#people-list");
 const historyList = document.querySelector("#history-list");
 const registerTab = document.querySelector("#tab-registro");
 const chartsTab = document.querySelector("#tab-grafici");
+const movementsTab = document.querySelector("#tab-movimenti");
+const movementsPanel = document.querySelector("#panel-movimenti");
 const registerPanel = document.querySelector("#panel-registro");
 const chartsPanel = document.querySelector("#panel-grafici");
 const chartRangeSelect = document.querySelector("#chart-range");
@@ -643,16 +645,34 @@ function renderCharts() {
 }
 
 function activateTab(selectedTab) {
-  const showCharts = selectedTab === chartsTab;
-  registerTab.classList.toggle("is-active", !showCharts);
-  chartsTab.classList.toggle("is-active", showCharts);
-  registerTab.setAttribute("aria-selected", String(!showCharts));
-  chartsTab.setAttribute("aria-selected", String(showCharts));
-  registerTab.tabIndex = showCharts ? -1 : 0;
-  chartsTab.tabIndex = showCharts ? 0 : -1;
-  registerPanel.hidden = showCharts;
-  chartsPanel.hidden = !showCharts;
-  if (showCharts) renderCharts();
+
+  registerTab.classList.remove("is-active");
+  movementsTab.classList.remove("is-active");
+  chartsTab.classList.remove("is-active");
+
+  registerPanel.hidden = true;
+  movementsPanel.hidden = true;
+  chartsPanel.hidden = true;
+
+  registerTab.setAttribute("aria-selected", "false");
+  movementsTab.setAttribute("aria-selected", "false");
+  chartsTab.setAttribute("aria-selected", "false");
+
+  selectedTab.classList.add("is-active");
+  selectedTab.setAttribute("aria-selected", "true");
+
+  if (selectedTab === registerTab) {
+    registerPanel.hidden = false;
+  }
+
+  if (selectedTab === movementsTab) {
+    movementsPanel.hidden = false;
+  }
+
+  if (selectedTab === chartsTab) {
+    chartsPanel.hidden = false;
+    renderCharts();
+  }
 }
 
 function render() {
@@ -734,7 +754,11 @@ themeToggle.addEventListener("click", () => {
   }
 });
 
-const tabs = [registerTab, chartsTab];
+const tabs = [
+  registerTab,
+  movementsTab,
+  chartsTab
+];
 for (const tab of tabs) {
   tab.addEventListener("click", () => activateTab(tab));
   tab.addEventListener("keydown", (event) => {

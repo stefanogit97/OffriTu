@@ -268,40 +268,39 @@
           </div>
         </section>
 
-        <section class="panel balance-report-panel" aria-labelledby="balance-report-heading">
-          <div class="history-heading report-heading">
-            <div>
-              <p class="eyebrow">RIEPILOGO PERSONALE</p>
-              <h2 id="balance-report-heading">Crediti e debiti mese per mese</h2>
-            </div>
-            <div class="history-actions report-actions">
-              <button id="summary-export-button" class="button button-secondary" type="button">Esporta riepilogo CSV</button>
-              <button class="button button-secondary pdf-button" type="button">Esporta PDF</button>
-              <button class="button button-secondary export-backup-button" type="button">Esporta backup</button>
-              <label class="button button-secondary import-label" for="summary-import-file">Importa backup</label>
-              <input id="summary-import-file" class="import-file" type="file" accept="application/json,.json" hidden>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table class="balance-report-table">
-              <thead>
-                <tr>
-                  <th scope="col">Periodo</th>
-                  <th scope="col">Persona</th>
-                  <th scope="col" class="align-right">Bevande a credito</th>
-                  <th scope="col" class="align-right">Bevande a debito</th>
-                  <th scope="col" class="align-right">Credito €</th>
-                  <th scope="col" class="align-right">Debito €</th>
-                </tr>
-              </thead>
-              <tbody id="balance-report-list"></tbody>
-            </table>
-            <div id="balance-report-empty" class="empty-state" hidden>
-              <p>Il riepilogo apparirà dopo aver registrato movimenti con “Io”.</p>
-            </div>
-          </div>
-        </section>
-      </section>
+       <section class="panel balance-report-panel"
+         aria-labelledby="balance-report-heading">
+
+  <div class="history-heading report-heading">
+    <div>
+      <p class="eyebrow">RIEPILOGO PERSONALE</p>
+      <h2 id="balance-report-heading">Bilancio caffeinomico ☕</h2>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+
+    <article class="summary-card">
+      <span class="summary-label">Mese selezionato</span>
+      <strong id="month-summary-coffee">0 ☕</strong>
+      <span id="month-summary-euro"
+            class="summary-foot">
+        € 0,00
+      </span>
+    </article>
+
+    <article class="summary-card">
+      <span class="summary-label">Dall'inizio</span>
+      <strong id="all-summary-coffee">0 ☕</strong>
+      <span id="all-summary-euro"
+            class="summary-foot">
+        € 0,00
+      </span>
+    </article>
+
+  </div>
+
+</section>
 
       <section id="panel-grafici" class="tab-panel charts-panel" role="tabpanel" aria-labelledby="tab-grafici" hidden>
         <div class="panel chart-controls">

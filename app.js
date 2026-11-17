@@ -576,7 +576,7 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
 
   months.forEach((month, monthIndex) => {
     const monthData = monthlyData[monthIndex];
-    const groupCenter = margin.left + groupWidth * (monthIndex + 0.5);
+    const groupCenter = margin.left + groupWidth * (monthIndex + 0.5) - 18;
 
     people.forEach((person, personIndex) => {
       const balance = monthData.values.get(person.key);

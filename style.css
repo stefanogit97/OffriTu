@@ -1388,14 +1388,18 @@ body {
 }
 .net-balance-heading {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 7px;
   flex-wrap: nowrap;
 }
 
+.net-balance-heading .summary-label {
+  display: inline;
+}
+
 .net-balance-period {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 5px;
   white-space: nowrap;
   font-size: 0.8rem;
@@ -1403,10 +1407,9 @@ body {
 }
 
 .net-balance-dot {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   font-size: 0.8rem;
   line-height: 1;
-  transform: translateY(-2px);
+  vertical-align: middle;
+  transform: translateY(-1px);
 }
-

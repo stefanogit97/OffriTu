@@ -275,9 +275,9 @@ function renderSummary(periodEntries) {
   document.querySelector("#footer-received-money").textContent = periodLabel;
   document.querySelector("#net-balance-status").textContent =
   netBalance > 0
-    ? "Sei in gain"
+    ? "Sei in gain. Continua così!"
     : netBalance < 0
-      ? "Sei in perdita"
+      ? "Sei in perdita. Attento ai freerider."
       : "In pari";
 
 document.querySelector("#period-caption").textContent = periodLabel;

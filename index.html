@@ -69,9 +69,27 @@
       <div id="app-message" class="message" role="status" aria-live="polite" hidden></div>
 
       <nav class="tabs" role="tablist" aria-label="Sezioni dell'app">
-        <button id="tab-registro" class="tab-button is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-registro">Registro</button>
-        <button id="tab-grafici" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="panel-grafici" tabindex="-1">Grafici</button>
-      </nav>
+  <button id="tab-registro" class="tab-button is-active"
+          type="button" role="tab"
+          aria-selected="true"
+          aria-controls="panel-registro">
+    Registro
+  </button>
+
+  <button id="tab-movimenti" class="tab-button"
+          type="button" role="tab"
+          aria-selected="false"
+          aria-controls="panel-movimenti">
+    Movimenti
+  </button>
+
+  <button id="tab-grafici" class="tab-button"
+          type="button" role="tab"
+          aria-selected="false"
+          aria-controls="panel-grafici">
+    Grafici
+  </button>
+</nav>
 
       <section id="panel-registro" class="tab-panel" role="tabpanel" aria-labelledby="tab-registro">
         

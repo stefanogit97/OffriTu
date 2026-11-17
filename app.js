@@ -498,9 +498,9 @@ function drawBalanceChart(svg, emptyState, months, people, monthlyData, isEuro) 
   const maxNameLines = Math.max(...nameLines.map((lines) => lines.length));
   const plotHeight = 245;
   const margin = { top: 24, right: 20, bottom: maxNameLines * 12 + 46, left: 62 };
-  const groupStep = Math.max(138, people.length * 104 + 24);
+  const groupStep = Math.max(130, people.length * 76 + 24);
   const contentWidth = margin.left + margin.right + months.length * groupStep;
-  const width = Math.max(contentWidth, svg.parentElement.clientWidth);
+  const width = contentWidth;
   const height = margin.top + plotHeight + margin.bottom;
   const plotWidth = width - margin.left - margin.right;
   const plotBottom = margin.top + plotHeight;

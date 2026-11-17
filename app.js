@@ -334,108 +334,70 @@ function renderPeople(periodEntries) {
   }
 }
 
-
-  
-
 function renderBalanceSummary() {
 
-  const monthEntries =
-    monthSelect.value
-      ? entries.filter(entry =>
-          entry.date.startsWith(monthSelect.value))
-      : [];
+  const periodEntries = selectedEntries();
 
-  const monthCoffee =
-    monthEntries.reduce((sum, entry) => {
+  let coffeeBalance = 0;
+  let euroBalance = 0;
 
-      const payer = getPersonKey(entry.payer);
-      const drinker = getPersonKey(entry.drinker);
+  for (const entry of periodEntries) {
 
-      if (payer === selfKey && drinker !== selfKey) {
-        return sum + entry.quantity;
-      }
+    const payer = getPersonKey(entry.payer);
+    const drinker = getPersonKey(entry.drinker);
 
-      if (drinker === selfKey && payer !== selfKey) {
-        return sum - entry.quantity;
-      }
+    const total =
+      entry.quantity * entry.unitPriceCents;
 
-      return sum;
+    if (payer === selfKey && drinker !== selfKey) {
+      coffeeBalance += entry.quantity;
+      euroBalance += total;
+    }
 
-    }, 0);
+    if (drinker === selfKey && payer !== selfKey) {
+      coffeeBalance -= entry.quantity;
+      euroBalance -= total;
+    }
+  }
 
-  const monthEuro =
-    monthEntries.reduce((sum, entry) => {
+  const periodLabel =
+    periodSelect.value === "all"
+      ? "Da sempre"
+      : monthFormatter.format(
+          new Date(`${monthSelect.value}-01`)
+        );
 
-      const payer = getPersonKey(entry.payer);
-      const drinker = getPersonKey(entry.drinker);
+  document.querySelector("#balance-period-label").textContent =
+    periodLabel;
 
-      const total =
-        entry.quantity * entry.unitPriceCents;
+  if (coffeeBalance > 0) {
 
-      if (payer === selfKey && drinker !== selfKey) {
-        return sum + total;
-      }
+    document.querySelector("#balance-summary-coffee").textContent =
+      `Gain ${coffeeBalance} ☕`;
 
-      if (drinker === selfKey && payer !== selfKey) {
-        return sum - total;
-      }
+    document.querySelector("#balance-summary-euro").textContent =
+      `Gain ${formatMoney(euroBalance)}`;
 
-      return sum;
+  } else if (coffeeBalance < 0) {
 
-    }, 0);
+    document.querySelector("#balance-summary-coffee").textContent =
+      `Perdita ${Math.abs(coffeeBalance)} ☕`;
 
-  const totalCoffee =
-    entries.reduce((sum, entry) => {
+    document.querySelector("#balance-summary-euro").textContent =
+      `Perdita ${formatMoney(Math.abs(euroBalance))}`;
 
-      const payer = getPersonKey(entry.payer);
-      const drinker = getPersonKey(entry.drinker);
+  } else {
 
-      if (payer === selfKey && drinker !== selfKey) {
-        return sum + entry.quantity;
-      }
+    document.querySelector("#balance-summary-coffee").textContent =
+      "In pari";
 
-      if (drinker === selfKey && payer !== selfKey) {
-        return sum - entry.quantity;
-      }
-
-      return sum;
-
-    }, 0);
-
-  const totalEuro =
-    entries.reduce((sum, entry) => {
-
-      const payer = getPersonKey(entry.payer);
-      const drinker = getPersonKey(entry.drinker);
-
-      const total =
-        entry.quantity * entry.unitPriceCents;
-
-      if (payer === selfKey && drinker !== selfKey) {
-        return sum + total;
-      }
-
-      if (drinker === selfKey && payer !== selfKey) {
-        return sum - total;
-      }
-
-      return sum;
-
-    }, 0);
-
-  document.querySelector("#month-summary-coffee").textContent =
-    `${monthCoffee > 0 ? "+" : ""}${monthCoffee} ☕`;
-
-  document.querySelector("#month-summary-euro").textContent =
-    `${monthEuro > 0 ? "+" : ""}${formatMoney(monthEuro)}`;
-
-  document.querySelector("#all-summary-coffee").textContent =
-    `${totalCoffee > 0 ? "+" : ""}${totalCoffee} ☕`;
-
-  document.querySelector("#all-summary-euro").textContent =
-    `${totalEuro > 0 ? "+" : ""}${formatMoney(totalEuro)}`;
-
+    document.querySelector("#balance-summary-euro").textContent =
+      formatMoney(0);
+  }
 }
+  
+
+
 
 function renderHistory(periodEntries) {
   const sortedEntries = [...periodEntries].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));

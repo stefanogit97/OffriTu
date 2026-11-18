@@ -1413,3 +1413,11 @@ body {
   vertical-align: middle;
   transform: translateY(-1px);
 }
+/* Riduce lo spazio tra Riepilogo e I miei saldi */
+.content-grid {
+  row-gap: 8px;
+}
+
+.summary-grid {
+  margin-bottom: 0;
+}

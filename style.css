@@ -1415,7 +1415,7 @@ body {
 }
 /* Riduce lo spazio tra Riepilogo e I miei saldi */
 .content-grid {
-  row-gap: 8px;
+  row-gap: 12px;
 }
 
 .summary-grid {

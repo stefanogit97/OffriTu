@@ -1421,3 +1421,11 @@ body {
 .summary-grid {
   margin-bottom: 0;
 }
+.brand-mascot {
+  display: block;
+  width: 82px;
+  height: 78px;
+  object-fit: contain;
+  background: transparent;
+  border: 0;
+}

@@ -58,11 +58,11 @@ select {
   text-decoration: none;
 }
 
-.brand-mark {
-  display: grid;
+.brand-logo {
+  display: block;
   width: 82px;
   height: 82px;
-  place-items: center;
+  object-fit: contain;
 }
 
 .brand-mascot {

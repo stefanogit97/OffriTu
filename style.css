@@ -65,18 +65,11 @@ select {
   object-fit: contain;
 }
 
-.brand-mascot {
-  display: block;
+.brand-mark {
+  display: grid;
   width: 82px;
-  height: 78px;
-}
-
-.mascot-dollar {
-  fill: #67432f;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 900;
-  text-anchor: middle;
+  height: 82px;
+  place-items: center;
 }
 
 .brand-light {
@@ -1237,10 +1230,12 @@ tbody tr:last-child td {
     height: 72px;
   }
 
-  .brand-mascot {
-    width: 72px;
-    height: 68px;
-  }
+  .brand-logo {
+  display: block;
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
 
 .page {
   width: 100%;
@@ -1420,12 +1415,4 @@ body {
 
 .summary-grid {
   margin-bottom: 0;
-}
-.brand-mascot {
-  display: block;
-  width: 82px;
-  height: 78px;
-  object-fit: contain;
-  background: transparent;
-  border: 0;
 }

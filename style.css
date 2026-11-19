@@ -60,15 +60,15 @@ select {
 
 .brand-logo {
   display: block;
-  width: 82px;
-  height: 82px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
 .brand-mark {
   display: grid;
-  width: 82px;
-  height: 82px;
+  width: 52px;
+  height: 22px;
   place-items: center;
 }
 
@@ -1226,14 +1226,14 @@ tbody tr:last-child td {
   }
 
   .brand-mark {
-    width: 72px;
-    height: 72px;
+    width: 56px;
+    height: 56px;
   }
 
   .brand-logo {
   display: block;
-  width: 82px;
-  height: 82px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
 }
 

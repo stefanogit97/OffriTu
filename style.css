@@ -1226,14 +1226,14 @@ tbody tr:last-child td {
   }
 
   .brand-mark {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
   }
 
   .brand-logo {
   display: block;
-  width: 56px;
-  height: 56px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 

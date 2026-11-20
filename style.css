@@ -1322,6 +1322,10 @@ td {
   font-weight: 800;
 }
 
+  .brand-logo {
+  transform: translateY(12px);
+}
+
   .brand-tagline {
   max-width: 260px;
   font-size: 14px;

@@ -1140,7 +1140,22 @@ tbody tr:last-child td {
 }
 
   .brand-copy {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+
+  .brand-tagline,
+.theme-hint {
   display: none !important;
+}
+
+  .brand-name {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin-top: 4px;
+  color: #52331f !important;
 }
 
   .brand-logo {
@@ -1156,8 +1171,9 @@ tbody tr:last-child td {
   .brand {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
 }
   
   .topbar {

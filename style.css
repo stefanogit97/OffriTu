@@ -1129,24 +1129,60 @@ tbody tr:last-child td {
     padding: 0 0 10px;
   }
 
-  .topbar-actions,
-  .tabs,
-  .entry-panel,
-  .page-footer,
-  .history-actions,
-  .delete-button {
-    display: none !important;
-  }
+  .topbar,
+.topbar-actions,
+.tabs,
+.entry-panel,
+.page-footer,
+.history-actions,
+.delete-button,
+.theme-hint {
+  display: none !important;
+}
 
-  .page {
-    width: 100%;
-    padding: 16px 0;
-  }
+  .intro {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.intro h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.intro-copy {
+  font-size: 13px;
+}
+  
+  .intro {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.intro h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.intro-copy {
+  font-size: 13px;
+}
 
   .intro {
     margin-bottom: 14px;
   }
 
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+th,
+td {
+  white-space: normal;
+  word-break: break-word;
+}
+  
   .summary-grid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
@@ -1157,6 +1193,11 @@ tbody tr:last-child td {
     box-shadow: none;
     break-inside: avoid;
   }
+
+  .history-panel {
+  margin-top: 0;
+  border: 1px solid #ddd;
+}
 
   .content-grid {
     grid-template-columns: 1fr;

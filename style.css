@@ -1139,6 +1139,10 @@ tbody tr:last-child td {
   display: none !important;
 }
 
+  .brand-copy {
+  display: none !important;
+}
+
   .brand-logo {
   width: 70px !important;
   height: 70px !important;
@@ -1151,7 +1155,9 @@ tbody tr:last-child td {
 
   .brand {
   width: 100%;
+  display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
   
   .topbar {
@@ -1159,8 +1165,7 @@ tbody tr:last-child td {
     padding: 0 0 10px;
   }
 
-  .topbar,
-.topbar-actions,
+  .topbar-actions,
 .tabs,
 .entry-panel,
 .page-footer,

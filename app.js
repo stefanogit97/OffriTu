@@ -449,52 +449,46 @@ function refreshChartRanges(months) {
 
 
 function getChartMonths(range, selectedPerson) {
-  // Da sempre deve essere un unico periodo aggregato
-  if (range === "all") {
-    return [{ key: "all", label: "Da sempre" }];
-  }
-
   const selectedKey = selectedPerson === "all"
     ? null
     : selectedPerson.slice("person:".length);
 
-  const hasMovement = entries.some((entry) => {
+  const monthKeys = [...new Set(entries.filter((entry) => {
     const drinkerKey = getPersonKey(entry.drinker);
     const payerKey = getPersonKey(entry.payer);
 
-    const involvesMe =
-      (drinkerKey === selfKey && payerKey !== selfKey) ||
-      (payerKey === selfKey && drinkerKey !== selfKey);
-
-    if (!involvesMe) return false;
-
-    if (selectedKey) {
-      const otherPerson = drinkerKey === selfKey
-        ? payerKey
-        : drinkerKey;
-
-      if (otherPerson !== selectedKey) return false;
+    if (drinkerKey === selfKey && payerKey !== selfKey) {
+      return !selectedKey || payerKey === selectedKey;
     }
 
-    return entry.date.startsWith(range);
+    if (payerKey === selfKey && drinkerKey !== selfKey) {
+      return !selectedKey || drinkerKey === selectedKey;
+    }
+
+    return false;
+  }).map((entry) => entry.date.slice(0, 7)))].sort();
+
+  const visibleMonthKeys = range === "all"
+    ? monthKeys
+    : monthKeys.includes(range)
+      ? [range]
+      : monthKeys;
+
+  return visibleMonthKeys.map((key) => {
+    const [year, month] = key.split("-").map(Number);
+    const date = new Date(year, month - 1, 1);
+
+    const monthName = new Intl.DateTimeFormat("it-IT", {
+      month: "long",
+      year: "numeric"
+    }).format(date);
+
+    const label = monthName.charAt(0).toLocaleUpperCase("it") +
+      monthName.slice(1);
+
+    return { key, label };
   });
-
-  if (!hasMovement) return [];
-
-  const [year, month] = range.split("-").map(Number);
-  const date = new Date(year, month - 1, 1);
-
-  const monthName = new Intl.DateTimeFormat("it-IT", {
-    month: "long",
-    year: "numeric"
-  }).format(date);
-
-  const label = monthName.charAt(0).toLocaleUpperCase("it") +
-    monthName.slice(1);
-
-  return [{ key: range, label }];
 }
-
 
 function svgElement(name, attributes = {}, text = "") {
   const element = document.createElementNS(

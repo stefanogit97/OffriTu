@@ -447,34 +447,54 @@ function refreshChartRanges(months) {
   ) ? previousSelection : "all";
 }
 
+
 function getChartMonths(range, selectedPerson) {
-  const selectedKey = selectedPerson === "all" ? null : selectedPerson.slice("person:".length);
-  const monthKeys = [...new Set(entries.filter((entry) => {
+  // Da sempre deve essere un unico periodo aggregato
+  if (range === "all") {
+    return [{ key: "all", label: "Da sempre" }];
+  }
+
+  const selectedKey = selectedPerson === "all"
+    ? null
+    : selectedPerson.slice("person:".length);
+
+  const hasMovement = entries.some((entry) => {
     const drinkerKey = getPersonKey(entry.drinker);
     const payerKey = getPersonKey(entry.payer);
-    if (drinkerKey === selfKey && payerKey !== selfKey) return !selectedKey || payerKey === selectedKey;
-    if (payerKey === selfKey && drinkerKey !== selfKey) return !selectedKey || drinkerKey === selectedKey;
-    return false;
-  }).map((entry) => entry.date.slice(0, 7)))].sort();
-  const visibleMonthKeys = range === "all"
-  ? monthKeys
-  : monthKeys.includes(range)
-    ? [range]
-    : monthKeys;
 
-  return visibleMonthKeys.map((key) => {
-    const [year, month] = key.split("-").map(Number);
-    const date = new Date(year, month - 1, 1);
-    const monthName = new Intl.DateTimeFormat("it-IT", {
-  month: "long",
-  year: "numeric"
-}).format(date);
+    const involvesMe =
+      (drinkerKey === selfKey && payerKey !== selfKey) ||
+      (payerKey === selfKey && drinkerKey !== selfKey);
 
-const label = monthName.charAt(0).toLocaleUpperCase("it") + monthName.slice(1);
+    if (!involvesMe) return false;
 
-return { key, label };
+    if (selectedKey) {
+      const otherPerson = drinkerKey === selfKey
+        ? payerKey
+        : drinkerKey;
+
+      if (otherPerson !== selectedKey) return false;
+    }
+
+    return entry.date.startsWith(range);
   });
+
+  if (!hasMovement) return [];
+
+  const [year, month] = range.split("-").map(Number);
+  const date = new Date(year, month - 1, 1);
+
+  const monthName = new Intl.DateTimeFormat("it-IT", {
+    month: "long",
+    year: "numeric"
+  }).format(date);
+
+  const label = monthName.charAt(0).toLocaleUpperCase("it") +
+    monthName.slice(1);
+
+  return [{ key: range, label }];
 }
+
 
 function svgElement(name, attributes = {}, text = "") {
   const element = document.createElementNS(
@@ -650,7 +670,9 @@ function renderCharts() {
   : allPeople.filter(
       (person) => `person:${person.key}` === selectedPerson
     );
-  const months = getChartMonths(chartRangeSelect.value, selectedPerson);
+  const months = chartRangeSelect.value === "all"
+  ? [{ key: "all", label: "Da sempre" }]
+  : getChartMonths(chartRangeSelect.value, selectedPerson);
   const monthlyData = months.map((month) => ({
     hasMovement: false,
     values: new Map(people.map((person) => [person.key, { beverageBalance: 0, balanceCents: 0 }]))
@@ -658,7 +680,10 @@ function renderCharts() {
   const monthIndexByKey = new Map(months.map((month, index) => [month.key, index]));
 
   for (const entry of entries) {
-    const monthIndex = monthIndexByKey.get(entry.date.slice(0, 7));
+    const monthKey = chartRangeSelect.value === "all"
+  ? "all"
+  : entry.date.slice(0, 7);
+const monthIndex = monthIndexByKey.get(monthKey);
     if (monthIndex === undefined) continue;
 
     const month = monthlyData[monthIndex];

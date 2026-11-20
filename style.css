@@ -1125,6 +1125,36 @@ tbody tr:last-child td {
   }
 
   .topbar {
+  display: flex !important;
+  justify-content: flex-end;
+  border: 0;
+  padding: 0;
+  margin-bottom: 10px;
+  min-height: auto;
+}
+
+  .topbar-actions,
+.theme-hint,
+.brand-tagline {
+  display: none !important;
+}
+
+  .brand-logo {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.brand-mark {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+  .brand {
+  width: 100%;
+  justify-content: flex-end;
+}
+  
+  .topbar {
     min-height: auto;
     padding: 0 0 10px;
   }

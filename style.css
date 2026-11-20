@@ -1141,8 +1141,12 @@ tbody tr:last-child td {
 
   .brand-copy {
   display: flex !important;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  width: 55px !important;
+  min-width: 55px !important;
+  text-align: right !important;
 }
 
   .brand-tagline,
@@ -1169,11 +1173,13 @@ tbody tr:last-child td {
 }
 
   .brand {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  gap: 2px !important;
+  margin: 0 !important;
 }
   
   .topbar {
